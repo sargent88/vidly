@@ -1,8 +1,17 @@
+const debug = require('debug')('app:startup');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const Joi = require('joi');
 const express = require('express');
 const app = express();
 
 app.use(express.json());
+app.use(helmet());
+
+if(app.get('env') === 'development') {
+    app.use(morgan('tiny'));
+    debug('Morgan enabled...')
+}
 
 const genres = [
     { id: 1, name: 'Action' },
